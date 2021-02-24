@@ -7,6 +7,7 @@ from .embeddings_already_packaged_as_triplets import EmbeddingsAlreadyPackagedAs
 from .hdc_miner import HDCMiner
 from .maximum_loss_miner import MaximumLossMiner
 from .multi_similarity_miner import MultiSimilarityMiner
+from .multi_similarity_priority_miner import MultiSimilarityPriorityMiner
 from .pair_margin_miner import PairMarginMiner
 from .triplet_margin_miner import TripletMarginMiner
 from .uniform_histogram_miner import UniformHistogramMiner
