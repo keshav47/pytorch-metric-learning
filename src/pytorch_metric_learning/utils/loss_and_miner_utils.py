@@ -52,7 +52,6 @@ def get_all_priority_pairs_indices(labels, ref_labels=None):
     The first 2 tensors are the indices which form all positive pairs
     The second 2 tensors are the indices which form all negative pairs
     """
-    print(ref_labels)
     labels1 = labels.unsqueeze(1)
     labels2 = labels.unsqueeze(0)
     matches = (labels1 == labels2).byte()

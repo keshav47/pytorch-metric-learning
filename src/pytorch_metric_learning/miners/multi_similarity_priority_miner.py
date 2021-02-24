@@ -15,6 +15,7 @@ class MultiSimilarityPriorityMiner(BaseTupleMiner):
     def mine(self, embeddings, labels, ref_emb, ref_labels):
         mat = self.distance(embeddings, ref_emb)
         a1, p, a2, n = lmu.get_all_priority_pairs_indices(labels, ref_labels)
+        print(a1, p, a2, n)
 
         if len(a1) == 0 or len(a2) == 0:
             empty = torch.tensor([], device=labels.device, dtype=torch.long)
