@@ -46,6 +46,25 @@ def get_all_pairs_indices(labels, ref_labels=None):
     a2_idx, n_idx = torch.where(diffs)
     return a1_idx, p_idx, a2_idx, n_idx
 
+# def get_all_priority_pairs_indices(labels, ref_labels=None):
+#     """
+#     Given a tensor of labels, this will return 4 tensors.
+#     The first 2 tensors are the indices which form all positive pairs
+#     The second 2 tensors are the indices which form all negative pairs
+#     """
+#     labels1 = labels.unsqueeze(1)
+#     labels2 = labels.unsqueeze(0)
+#     matches = (labels1 == labels2).byte()
+#     diffs = matches ^ 1
+#     # matches.fill_diagonal_(0)
+#     a1_idx, p_idx = torch.where(matches)
+#     a2_idx, n_idx = torch.where(torch.where(ref_labels==2,1,0))
+#     a_ps_idx, n_ps_idx = torch.where(diffs)
+    
+#     a1_idx, p_idx = torch.cat([a1_idx, a_ps_idx], dim=0),torch.cat([p_idx, n_ps_idx], dim=0)
+    
+#     return a1_idx, p_idx, a2_idx, n_idx
+
 def get_all_priority_pairs_indices(labels, ref_labels=None):
     """
     Given a tensor of labels, this will return 4 tensors.
@@ -55,9 +74,13 @@ def get_all_priority_pairs_indices(labels, ref_labels=None):
     labels1 = labels.unsqueeze(1)
     labels2 = labels.unsqueeze(0)
     matches = (labels1 == labels2).byte()
+    diffs = matches ^ 1
     matches.fill_diagonal_(0)
     a1_idx, p_idx = torch.where(matches)
     a2_idx, n_idx = torch.where(torch.where(ref_labels==2,1,0))
+    a_ps_idx, n_ps_idx = torch.where(torch.where(ref_labels<2,1,0))
+    a1_idx, p_idx = torch.cat([a1_idx, a_ps_idx], dim=0),torch.cat([p_idx, n_ps_idx], dim=0)
+    a2_idx, n_idx = torch.cat([a2_idx, a_ps_idx], dim=0),torch.cat([n_idx, n_ps_idx], dim=0)
     return a1_idx, p_idx, a2_idx, n_idx
 
 def convert_to_pairs(indices_tuple, labels):
