@@ -15,8 +15,8 @@ class MultiSimilarityPriorityMiner(BaseTupleMiner):
     def mine(self, embeddings, labels, ref_emb, ref_labels):
         mat = self.distance(embeddings, ref_emb)
         a1, p, a2, n = lmu.get_all_priority_pairs_indices(labels, ref_labels)
-        print(a1, p, a2, n)
-        print(lmu.get_all_priority_pairs_indices_test(labels, ref_labels))
+        # print(a1, p, a2, n)
+        # print(lmu.get_all_priority_pairs_indices_test(labels, ref_labels))
 
         if len(a1) == 0 or len(a2) == 0:
             empty = torch.tensor([], device=labels.device, dtype=torch.long)
@@ -33,8 +33,8 @@ class MultiSimilarityPriorityMiner(BaseTupleMiner):
             c_f.neg_inf(dtype) if self.distance.is_inverted else c_f.pos_inf(dtype)
         )
 
-        mat_pos_sorting[a2, n] = pos_ignore
-        mat_neg_sorting[a1, p] = neg_ignore
+        mat_pos_sorting[a2, n] = pos_ignore  #a2 and n should be such indices which when ignored gives the true positive pairs
+        mat_neg_sorting[a1, p] = neg_ignore  #a1 and p should be such indices which when ignored gives the true negative pairs
         if embeddings is ref_emb:
             mat_pos_sorting.fill_diagonal_(pos_ignore)
             mat_neg_sorting.fill_diagonal_(neg_ignore)
