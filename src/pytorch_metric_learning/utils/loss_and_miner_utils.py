@@ -60,9 +60,6 @@ def get_all_priority_pairs_indices_test(labels, ref_labels=None):
     a1_idx, p_idx = torch.where(matches)
     a2_idx, n_idx = torch.where(torch.where(ref_labels==2,1,0))
     a_ps_idx, n_ps_idx = torch.where(diffs)
-    
-    a1_idx, p_idx = torch.cat([a1_idx, a_ps_idx], dim=0),torch.cat([p_idx, n_ps_idx], dim=0)
-    
     return a1_idx, p_idx, a2_idx, n_idx
 
 def get_all_priority_pairs_indices(labels, ref_labels=None):
