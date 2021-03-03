@@ -55,7 +55,6 @@ def get_all_priority_pairs_indices_test(labels, ref_labels=None):
     labels1 = labels.unsqueeze(1)
     labels2 = labels.unsqueeze(0)
     matches = (labels1 == labels2).byte()
-    diffs = matches ^ 1
     # matches.fill_diagonal_(0)
     a1_idx, p_idx = torch.where(matches)
     a2_idx, n_idx = torch.where(torch.where(ref_labels==2,1,0))
